@@ -1,8 +1,9 @@
 import { dummyPosts } from '../../../data/posts';
 import Link from 'next/link';
 
-export default function PostPage({ params }: { params: { id: string } }) {
-  const post = dummyPosts.find(p => p.id === params.id);
+export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const post = dummyPosts.find(p => p.id === id);
 
   if (!post) {
     return (
