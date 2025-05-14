@@ -1,4 +1,3 @@
-'use client';
 import { dummyPosts } from '../../../data/posts';
 import Link from 'next/link';
 
