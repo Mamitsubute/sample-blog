@@ -2,15 +2,24 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { validateTitle } from './validateTitle';
 
 export default function NewPost() {
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
+  const [titleError, setTitleError] = useState('');
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTitle(value);
+    setTitleError(validateTitle(value));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (titleError) return;
     // In a real app, this would send data to an API
     console.log({ title, content, author });
     // For now, just redirect back to home
@@ -31,10 +40,13 @@ export default function NewPost() {
               type="text"
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
               className="w-full p-2 border rounded"
               required
             />
+            {titleError && (
+              <p className="text-red-500 text-sm mt-1">{titleError}</p>
+            )}
           </div>
 
           <div>
@@ -68,6 +80,7 @@ export default function NewPost() {
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+              disabled={!!titleError}
             >
               Create Post
             </button>
