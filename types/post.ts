@@ -3,5 +3,5 @@ export interface Post {
     title: string;
     content: string;
     author: string;
-    createdAt: string;
+    created_at: string;
   } 

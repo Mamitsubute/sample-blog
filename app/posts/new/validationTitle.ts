@@ -3,4 +3,4 @@ export function validateTitle(title: string): string {
     return 'Title must be less than 30 characters.';
   }
   return '';
-}
+} 

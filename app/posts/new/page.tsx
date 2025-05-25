@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { validateTitle } from './validateTitle';
+import { validateTitle } from './validationTitle';
 
 export default function NewPost() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { validateTitle } from './validateTitle';
+import { validateTitle } from './validationTitle';
 
 describe('validateTitle', () => {
   it('returns an error if title is 30 characters or more', () => {
@@ -10,4 +10,4 @@ describe('validateTitle', () => {
     expect(validateTitle('Short title')).toBe('');
     expect(validateTitle('a'.repeat(29))).toBe('');
   });
-});
+}); 

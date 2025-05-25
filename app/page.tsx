@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { fetchPosts } from '../lib/posts';
+import { Post } from '../types/post';
 
 export default async function Home() {
   let posts = [];
@@ -30,7 +31,7 @@ export default async function Home() {
         </div>
         <div className="space-y-6">
           {posts && posts.length > 0 ? (
-            posts.map((post: any) => (
+            posts.map((post: Post) => (
               <article key={post.id} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <Link href={`/posts/${post.id}`}>
                   <h2 className="text-2xl font-semibold mb-2 hover:text-blue-500">
