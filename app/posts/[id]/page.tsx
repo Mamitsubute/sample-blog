@@ -30,7 +30,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
           <div className="text-gray-500 mb-8">
             <span>By {post.author}</span>
             <span className="mx-2">•</span>
-            <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+            <span>{new Date(post.created_at).toLocaleDateString()}</span>
           </div>
           <div className="prose max-w-none">
             <p>{post.content}</p>
