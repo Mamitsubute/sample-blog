@@ -1,7 +1,21 @@
-import { dummyPosts } from '../data/posts';
 import Link from 'next/link';
+import { fetchPosts } from '../lib/posts';
 
-export default function Home() {
+export default async function Home() {
+  let posts = [];
+  try {
+    posts = await fetchPosts();
+  } catch (error) {
+    return (
+      <div className="min-h-screen p-8">
+        <main className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-4">Failed to load posts</h1>
+          <p className="text-red-500">{String(error)}</p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen p-8">
       <main className="max-w-4xl mx-auto">
@@ -14,24 +28,27 @@ export default function Home() {
             Create New Post
           </Link>
         </div>
-        
         <div className="space-y-6">
-          {dummyPosts.map((post) => (
-            <article key={post.id} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <Link href={`/posts/${post.id}`}>
-                <h2 className="text-2xl font-semibold mb-2 hover:text-blue-500">
-                  {post.title}
-                </h2>
-              </Link>
-              <p className="text-gray-600 mb-4">
-                {post.content.substring(0, 150)}...
-              </p>
-              <div className="flex justify-between text-sm text-gray-500">
-                <span>By {post.author}</span>
-                <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-              </div>
-            </article>
-          ))}
+          {posts && posts.length > 0 ? (
+            posts.map((post: any) => (
+              <article key={post.id} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <Link href={`/posts/${post.id}`}>
+                  <h2 className="text-2xl font-semibold mb-2 hover:text-blue-500">
+                    {post.title}
+                  </h2>
+                </Link>
+                <p className="text-gray-600 mb-4">
+                  {post.content?.substring(0, 150)}...
+                </p>
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>By {post.author}</span>
+                  <span>{post.created_at ? new Date(post.created_at).toLocaleDateString() : ''}</span>
+                </div>
+              </article>
+            ))
+          ) : (
+            <p className="text-gray-500">No posts found.</p>
+          )}
         </div>
       </main>
     </div>
